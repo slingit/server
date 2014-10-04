@@ -15,6 +15,9 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'spring',        group: :development
 
+gem 'houston'
+gem 'gcm'
+
 group :development do
   gem 'guard-rspec'
   gem 'guard-bundler'
