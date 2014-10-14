@@ -4,7 +4,12 @@ module Api
 
 			def show
 				message = Message.find(params[:message_id])
-				render plain: message.content
+				path = "public/uploads/messages/#{message.id}/content"
+				if message.content_type == 'text/x-hyperlink'
+					redirect_to open(path).read
+				else
+					send_file Rails.root.join(path), type: message.content_type, disposition: :inline
+				end
 			end
 
 		end

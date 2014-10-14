@@ -15,6 +15,10 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'spring',        group: :development
 
+gem 'paperclip'
+gem 'ruby-filemagic'
+gem 'rest_client'
+
 gem 'houston'
 gem 'gcm'
 

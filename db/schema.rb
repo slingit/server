@@ -20,12 +20,12 @@ ActiveRecord::Schema.define(version: 20141004121017) do
   create_table "devices", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.text     "type"
     t.text     "token"
-    t.integer  "group_id"
+    t.uuid     "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "groups", force: true do |t|
+  create_table "groups", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20141004121017) do
   create_table "messages", force: true do |t|
     t.uuid     "creator_id"
     t.text     "content"
+    t.text     "content_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

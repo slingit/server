@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :devices, only: :create
       resources :messages, only: :create do
-      	resource :content, only: :show
+      	resource :content
       end
     end
   end

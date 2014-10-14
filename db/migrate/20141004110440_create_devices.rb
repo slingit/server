@@ -4,7 +4,7 @@ class CreateDevices < ActiveRecord::Migration
     create_table :devices, id: :uuid do |t|
     	t.text :type
     	t.text :token
-    	t.belongs_to :group
+    	t.uuid :group_id
       t.timestamps
     end
   end
