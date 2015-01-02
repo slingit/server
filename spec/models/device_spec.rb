@@ -18,4 +18,13 @@ RSpec.describe Device, :type => :model do
       end
     end
   end
+
+  describe "#group=" do
+    it "sets group_id" do
+      device = Device.new
+      group = FactoryGirl.build(:group)
+      device.group = group
+      expect(device.group_id).to eq group.id
+    end
+  end
 end

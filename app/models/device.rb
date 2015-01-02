@@ -6,4 +6,8 @@ class Device < ActiveRecord::Base
   def group
     Group.new(id: group_id)
   end
+
+  def group=(group)
+    self.group_id = group.id
+  end
 end
