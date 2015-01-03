@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  resources :devices, only: [:create]
+  resources :devices, only: [:show, :create]
 end

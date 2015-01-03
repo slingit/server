@@ -1,6 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe DevicesController, :type => :controller do
+  describe "GET #show" do
+    context "with a valid device ID" do
+      let!(:id) { FactoryGirl.create(:device).id }
+      before { get :show, id: id }
+
+      it "responds with 200 OK" do
+        expect(response).to have_http_status 200
+      end
+    end
+
+    context "with an invalid device ID" do
+      before { get :show, id: SecureRandom.uuid }
+
+      it "responds with 404 Not Found" do
+        expect(response).to have_http_status 404
+      end
+    end
+  end
+
   describe "POST #create" do
     context "with valid data" do
       before do
