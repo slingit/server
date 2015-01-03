@@ -17,6 +17,12 @@ RSpec.describe Device, :type => :model do
         expect(device.group.id).to eq id
       end
     end
+
+    context "with no group" do
+      it "returns nil" do
+        expect(Device.new.group).to be_nil
+      end
+    end
   end
 
   describe "#group=" do

@@ -4,7 +4,7 @@ class Device < ActiveRecord::Base
   alias valid_secret? authenticate
 
   def group
-    Group.new(id: group_id)
+    Group.new(id: group_id) if group_id
   end
 
   def group=(group)
