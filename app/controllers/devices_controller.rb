@@ -19,6 +19,12 @@ class DevicesController < ApplicationController
     end
   end
 
+  def update
+    @device = Device.find_by(id: params[:id])
+    status = @device.update(update_params) ? 200 : 422
+    render nothing: true, status: status
+  end
+
   private
 
   def set_format
@@ -31,5 +37,9 @@ class DevicesController < ApplicationController
       result[:group_id] = group_id
     end
     result
+  end
+
+  def update_params
+    { group_id: params.require(:devices)[:links][:group] }
   end
 end

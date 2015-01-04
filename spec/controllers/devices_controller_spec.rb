@@ -91,4 +91,29 @@ RSpec.describe DevicesController, :type => :controller do
       end
     end
   end
+
+  describe "PUT #update" do
+    let!(:device) { FactoryGirl.create(:device) }
+
+    context "when group id is nil" do
+      before do
+        put :update, id: device.id, devices: { links: { group: nil } }
+      end
+
+      it "updates group id" do
+        expect(assigns(:device).group).to be_nil
+      end
+    end
+
+    context "when group id is a UUID" do
+      let!(:group_id) { SecureRandom.uuid }
+      before do
+        put :update, id: device.id, devices: { links: { group: group_id } }
+      end
+
+      it "updates group id" do
+        expect(assigns(:device).group.id).to eq group_id
+      end
+    end
+  end
 end
