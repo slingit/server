@@ -11,7 +11,7 @@ class DevicesController < ApplicationController
   end
 
   def create
-    @device = Device.new(device_params)
+    @device = Device.new(create_params)
     if @device.save
       render :show, status: 201
     else
@@ -25,7 +25,11 @@ class DevicesController < ApplicationController
     request.format = :json
   end
 
-  def device_params
-    params.require(:devices).permit(:id, :secret)
+  def create_params
+    result = params.require(:devices).permit(:id, :secret)
+    if group_id = params[:devices][:links].try(:[], :group)
+      result[:group_id] = group_id
+    end
+    result
   end
 end

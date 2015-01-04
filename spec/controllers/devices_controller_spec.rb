@@ -57,6 +57,27 @@ RSpec.describe DevicesController, :type => :controller do
       end
     end
 
+    context "with optional data" do
+      let!(:id) { SecureRandom.uuid }
+      let!(:secret) { SecureRandom.uuid }
+      let!(:group_id) { SecureRandom.uuid }
+      before do
+        post :create, devices: {
+          id: id,
+          secret: secret,
+          links: { group: group_id }
+        }
+      end
+
+      it "responds with 201 Created" do
+        expect(response).to have_http_status 201
+      end
+
+      it "assigns group id" do
+        expect(assigns(:device).group.id).to eq group_id
+      end
+    end
+
     context "with unpermitted data" do
       before do
         @id = SecureRandom.uuid
