@@ -37,7 +37,7 @@ RSpec.describe DevicesController, :type => :controller do
 
       it "assigns data" do
         expect(assigns(:device).id).to eq @id
-        expect(assigns(:device)).to be_valid_secret @secret
+        assert assigns(:device).authenticate(@secret)
       end
 
       it "creates device" do

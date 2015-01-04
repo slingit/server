@@ -5,7 +5,7 @@ RSpec.describe Device, :type => :model do
     secret = "abc123"
     device = Device.create!(secret: secret)
     device.reload
-    expect(device).to be_valid_secret secret
+    assert device.authenticate(secret)
   end
 
   describe "#group" do
