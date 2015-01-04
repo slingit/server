@@ -2,8 +2,11 @@ require 'rails_helper'
 
 RSpec.describe DevicesController, :type => :controller do
   describe "GET #show" do
+    let!(:secret) { SecureRandom.uuid }
+    let!(:id) { FactoryGirl.create(:device, secret: secret).id }
+    before { authenticate! id, secret }
+
     context "with a valid device ID" do
-      let!(:id) { FactoryGirl.create(:device).id }
       before { get :show, id: id }
 
       it "responds with 200 OK" do
