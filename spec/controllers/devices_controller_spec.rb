@@ -41,7 +41,7 @@ RSpec.describe DevicesController, :type => :controller do
       end
 
       it "creates device" do
-        expect(Device).to be_exists assigns(:device).id
+        expect(assigns(:device)).to exist_in_database
       end
     end
 
@@ -56,7 +56,7 @@ RSpec.describe DevicesController, :type => :controller do
       end
 
       it "does not create device" do
-        expect(Device).not_to be_exists assigns(:device).id
+        expect(assigns(:device)).not_to exist_in_database
       end
     end
 
@@ -91,7 +91,7 @@ RSpec.describe DevicesController, :type => :controller do
       end
 
       it "does not create device" do
-        expect(Device).to be_exists assigns(:device).id
+        expect(assigns(:device)).to exist_in_database
       end
     end
 
