@@ -1,6 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe DevicesController, :type => :controller do
+  describe "GET #index" do
+    let!(:secret) { SecureRandom.uuid }
+    let!(:device) { FactoryGirl.create(:device_with_group, secret: secret) }
+    let!(:included) do
+      [FactoryGirl.create(:device, group_id: device.group_id)]
+    end
+    let!(:excluded) do
+      [FactoryGirl.create(:device_with_group), FactoryGirl.create(:device)]
+    end
+    before do
+      authenticate! device.id, secret
+      get :index
+    end
+
+    it { is_expected.to render_template :index }
+
+    it "responds with 200 OK" do
+      expect(response).to have_http_status 200
+    end
+
+    it "includes correct devices" do
+      expect(assigns(:devices) & included).to eq included
+      expect(assigns(:devices) & excluded).to be_empty
+    end
+  end
+
   describe "GET #show" do
     let!(:secret) { SecureRandom.uuid }
     let!(:id) { FactoryGirl.create(:device, secret: secret).id }

@@ -2,20 +2,18 @@ class DevicesController < ApplicationController
   include ActionController::HttpAuthentication::Basic::ControllerMethods
 
   before_action :set_format
+  before_action :authenticate_device!, only: [:index, :show]
 
   rescue_from "ActiveRecord::RecordNotUnique" do |error|
     render nothing: true, status: 422
   end
 
+  def index
+    @devices = @authenticated_device.group.devices
+    render :index
+  end
+
   def show
-    @authenticated_device = authenticate_with_http_basic do |id, secret|
-      Device.find_by(id: id).authenticate(secret)
-    end
-
-    unless @authenticated_device
-      return render nothing: true, status: 401
-    end
-
     @device = Device.find_by(id: params[:id])
     if @device
       render :show, status: 200
@@ -40,6 +38,16 @@ class DevicesController < ApplicationController
   end
 
   private
+
+  def authenticate_device!
+    @authenticated_device = authenticate_with_http_basic do |id, secret|
+      Device.find_by(id: id).authenticate(secret)
+    end
+
+    unless @authenticated_device
+      return render nothing: true, status: 401
+    end
+  end
 
   def set_format
     request.format = :json

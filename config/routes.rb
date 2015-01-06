@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   root "homes#show"
-  resources :devices, only: [:show, :create, :update]
+  resources :devices, only: [:index, :show, :create, :update]
 end
