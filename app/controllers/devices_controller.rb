@@ -3,6 +3,10 @@ class DevicesController < ApplicationController
 
   before_action :set_format
 
+  rescue_from "ActiveRecord::RecordNotUnique" do |error|
+    render nothing: true, status: 422
+  end
+
   def show
     @authenticated_device = authenticate_with_http_basic do |id, secret|
       Device.find_by(id: id).authenticate(secret)

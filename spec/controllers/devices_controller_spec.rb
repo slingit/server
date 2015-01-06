@@ -81,6 +81,20 @@ RSpec.describe DevicesController, :type => :controller do
       end
     end
 
+    context "with duplicate id" do
+      let!(:id) { FactoryGirl.create(:device).id }
+      let!(:secret) { SecureRandom.uuid }
+      before { post :create, devices: { id: id, secret: secret } }
+
+      it "responds with 422 Unprocessable Entity" do
+        expect(response).to have_http_status 422
+      end
+
+      it "does not create device" do
+        expect(Device).to be_exists assigns(:device).id
+      end
+    end
+
     context "with unpermitted data" do
       before do
         @id = SecureRandom.uuid
