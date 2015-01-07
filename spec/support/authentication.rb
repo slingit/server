@@ -1,6 +1,10 @@
 module AuthenticationHelper
   # returns a hash that can be merged with other headers
-  def authenticate(id, secret)
+  def authenticate(id = nil, secret = nil)
+    unless id || secret
+      secret = SecureRandom.uuid
+      id = create(:device, secret: secret).id
+    end
     { "HTTP_AUTHORIZATION" => "Basic " + Base64.encode64("#{id}:#{secret}") }
   end
 
