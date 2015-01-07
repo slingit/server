@@ -15,5 +15,6 @@ module AuthenticationHelper
 end
 
 RSpec.configure do |config|
-  config.include AuthenticationHelper
+  config.include AuthenticationHelper, type: :controller
+  config.include AuthenticationHelper, type: :controller_concern
 end
