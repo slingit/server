@@ -1,21 +1,15 @@
 require "rails_helper"
 
 describe Authentication, type: :controller_concern do
-  let!(:controller) do
-    Class.new(ActionController::Metal) do
-      include AbstractController::Callbacks
-      include Authentication
+  controller do
+    include AbstractController::Callbacks
 
-      before_action :authenticate
+    before_action :authenticate
 
-      def index
-        render text: authenticated_device.id
-      end
+    def test_action
+      render text: authenticated_device.id
     end
   end
-
-  let!(:app) { controller.action(:index) }
-  let!(:request) { Rack::MockRequest.new(app) }
 
   context "when no authentication is supplied" do
     it "responds with 401 Unauthorized" do
