@@ -8,7 +8,7 @@ module ControllerConcernHelper
   def controller(&block)
     @controller ||= begin
       concern = described_class
-      Class.new(ActionController::Metal) do
+      Class.new(ActionController::Base) do
         include concern
       end
     end
@@ -16,12 +16,10 @@ module ControllerConcernHelper
     @controller
   end
 
-  def app
-    @controller.action(:test_action)
-  end
-
-  def request
-    Rack::MockRequest.new(app)
+  def request(action_name = :test_action, options = {})
+    action = controller.action(action_name)
+    request = Rack::MockRequest.new(action)
+    request.get("/", options)
   end
 end
 
