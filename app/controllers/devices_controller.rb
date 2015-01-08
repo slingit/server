@@ -1,8 +1,8 @@
 class DevicesController < ApplicationController
   include Authentication
   include ErrorHandling
+  include ForceJSON
 
-  before_action :set_format
   before_action :authenticate, only: [:index, :show]
 
   def index
@@ -35,10 +35,6 @@ class DevicesController < ApplicationController
   end
 
   private
-
-  def set_format
-    request.format = :json
-  end
 
   def create_params
     result = params.require(:devices).permit(:id, :secret)
