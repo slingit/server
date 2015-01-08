@@ -1,12 +1,9 @@
 class DevicesController < ApplicationController
   include Authentication
+  include ErrorHandling
 
   before_action :set_format
   before_action :authenticate, only: [:index, :show]
-
-  rescue_from "ActiveRecord::RecordNotUnique" do |error|
-    render nothing: true, status: 422
-  end
 
   def index
     @devices = @authenticated_device.group.devices
