@@ -16,7 +16,7 @@ module ControllerConcernHelper
     @controller
   end
 
-  def request(action_name = :test_action, options = {})
+  def request(action_name, options = {})
     action = controller.action(action_name)
     request = Rack::MockRequest.new(action)
     request.get("/", options)
